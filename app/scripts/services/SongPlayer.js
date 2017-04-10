@@ -30,14 +30,23 @@
         };
         
         
+        /**
+        * @function playSong
+        * @desc Plays new audio file as currentBuzzObject & sets song playing condition to true
+        * @param {Object} song
+        */
+        var playSong = function(song) {
+            currentBuzzObject.play();
+            song.playing = true;
+        }
+        
+        
         //adds a play method by creating new Buzz object & playing it when song is clicked by user in album view
         SongPlayer.play = function(song) {
             
             if (currentSong !== song) {
                 setSong(song);
-                currentBuzzObject.play();
-                //updates song.playing to be true
-                song.playing = true;
+                playSong(song);
                 
             } else if (currentSong === song) {
                 if (currentBuzzObject.isPaused()) {
