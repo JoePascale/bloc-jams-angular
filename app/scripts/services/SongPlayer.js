@@ -1,8 +1,12 @@
 (function() {
-    function SongPlayer() {
+    function SongPlayer(Fixtures) {
         var SongPlayer = {};
         
-        var currentSong = null;
+        /**
+        * @desc Current album that should display based on Fixtures.js service
+        * @type {Object}
+        */
+        var currentAlbum = Fixtures.getAlbum();
         
         /**
         * @desc Buzz object audio file
@@ -18,7 +22,7 @@
         var setSong = function(song) {
             if (currentBuzzObject) {
                 currentBuzzObject.stop();
-                currentSong.playing = null;
+                SongPlayer.currentSong.playing = null;
             }
  
             currentBuzzObject = new buzz.sound(song.audioUrl, {
@@ -26,7 +30,7 @@
                 preload: true
             });
  
-            currentSong = song;
+            SongPlayer.currentSong = song;
         };
         
         
@@ -41,14 +45,37 @@
         }
         
         
-        //adds a play method by creating new Buzz object & playing it when song is clicked by user in album view
+        /**
+        * @function getSongIndex
+        * @desc Returns index of song
+        * @param {Object} song
+        */
+        var getSongIndex = function(song) {
+            return currentAlbum.songs.indexOf(song);
+        };
+        
+        
+        /**
+        * @desc Active song object from list of songs
+        * @type {Object}
+        */
+        SongPlayer.currentSong = null;
+        
+        
+        /**
+        * @function play
+        * @desc Play current or new song
+        * @param {Object} song
+        */
         SongPlayer.play = function(song) {
+            ///because player bar can't pass song in as argument
+            song = song || SongPlayer.currentSong;
             
-            if (currentSong !== song) {
+            if (SongPlayer.currentSong !== song) {
                 setSong(song);
                 playSong(song);
                 
-            } else if (currentSong === song) {
+            } else if (SongPlayer.currentSong === song) {
                 if (currentBuzzObject.isPaused()) {
                     currentBuzzObject.play();
                 }
@@ -57,8 +84,30 @@
         
         //adds pause method
         SongPlayer.pause = function(song) {
+            ///because player bar can't pass song in as argument
+            song = song || SongPlayer.currentSong;
+            
             currentBuzzObject.pause();
             song.playing = false;
+        };
+        
+        
+        /**
+        * @function SongPlayer.previous
+        * @desc Changes currentSongIndex to the previous song by finding song index and decrementing
+        */
+        SongPlayer.previous = function() {
+            var currentSongIndex = getSongIndex(SongPlayer.currentSong);
+            currentSongIndex--;
+            //if user is on first track in index, then stop the currently playing song and set value of currently playing song to the first song
+            if (currentSongIndex < 0) {
+                currentBuzzObject.stop();
+                SongPlayer.currentSong.playing = null;
+            } else {
+                var song = currentAlbum.songs[currentSongIndex];
+                setSong(song);
+                playSong(song);
+            }
         };
         
         return SongPlayer;
@@ -67,5 +116,5 @@
  
     angular
          .module('blocJams')
-         .factory('SongPlayer', SongPlayer);
+         .factory('SongPlayer', ['Fixtures', SongPlayer]);
  })();
