@@ -129,7 +129,7 @@
             currentSongIndex++;
             
             //if user is on last track in index, then loop back around to 0
-            if (currentSongIndex > (getSongIndex(SongPlayer.currentSong)).length) {
+            if (currentSongIndex === (currentAlbum.songs.length - 1)) {
                 currentSongIndex = 0;
             }
             
