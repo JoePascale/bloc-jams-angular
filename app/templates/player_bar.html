@@ -18,19 +18,19 @@
                  <span class="ion-skip-forward"></span>
              </a>
          </div>
-         <div class="control-group currently-playing" ng-model="songPlayer.song" ng-model="artist in album.albumData" ng-model="song in album.albumData.songs">
-             <h2 class="song-name">{{song.title}}</h2>
+         <div class="control-group currently-playing">
+             <h2 class="song-name">{{playerBar.songPlayer.currentSong.title}}</h2>
              <h2 class="artist-song-mobile"></h2>
-             <h3 class="artist-name">{{album.artist}}</h3>
+             <h3 class="artist-name">{{playerBar.songPlayer.currentAlbum.artist}}</h3>
              <div class="seek-control">
                  <seek-bar value="{{ playerBar.songPlayer.currentTime }}" max="{{ playerBar.songPlayer.currentSong.duration }}" on-change="playerBar.songPlayer.setCurrentTime(value)"></seek-bar>
-                 <div class="current-time"></div>
-                 <div class="total-time">{{song.duration}}</div>
+                 <div class="current-time">{{SongPlayer.currentTime}}</div>
+                 <div class="total-time">{{playerBar.songPlayer.currentSong.duration}}</div>
              </div>
          </div>
          <div class="control-group volume">
              <span class="icon ion-volume-high"></span>
-             <seek-bar></seek-bar>
+             <seek-bar value="{{default}}" max="{{100}}"></seek-bar>
          </div>
      </div>
  </section>
