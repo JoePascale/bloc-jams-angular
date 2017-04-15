@@ -4,14 +4,14 @@
   "description": "Starter project for the Bloc Frontend Web Development",
   "repository": {
     "type": "git",
-    "url": "https://github.com/bloc/bloc-frontend-project-starter"
+    "url": "git+https://github.com/bloc/bloc-frontend-project-starter.git"
   },
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
   "author": "Bloc Inc",
-  "license": "ISC",
+  "license": "UNLICENSED",
   "dependencies": {
     "hapi": "~7.5.0",
     "path": "^0.4.9"
@@ -19,5 +19,14 @@
   "devDependencies": {
     "connect-modrewrite": "^0.7.9",
     "es5-shim": "^4.0.1"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/bloc/bloc-frontend-project-starter/issues"
+  },
+  "homepage": "https://github.com/bloc/bloc-frontend-project-starter#readme",
+  "keywords": [
+    "bloc",
+    "jams",
+    "angular"
+  ]
 }
